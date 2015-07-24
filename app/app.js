@@ -1,7 +1,7 @@
 (function(){
   'use strict';
 
-  var app = angular.module('app', ['ngRoute', 'appRegister']);
+  var app = angular.module('app', ['ngRoute', 'ui.bootstrap', 'appRegister']);
 
   app.config(function($routeProvider){
     $routeProvider

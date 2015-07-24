@@ -3,8 +3,8 @@
 
   var app = angular.module('appRegister');
 
-  app.controller('RegisterController', function($scope, userService){
-    
+  app.controller('RegisterController', function($scope, userService, $modal){
+    var modalInstance = null;
     $scope.user = {id: 0, firstName: '', lastName: ''};
     
     $scope.users = userService.getUsers();
@@ -12,13 +12,45 @@
       userService.deleteUser(id);
       $scope.users = userService.getUsers();
     };
-    $scope.submitForm = function(){
-      console.log($scope.user);
-      userService.addUser($scope.user);
-      $scope.users = userService.getUsers();
-      return false;
-    }
+  
 
+
+    $scope.addUser = function($modalInstance){
+       
+       modalInstance  = $modal.open({
+        animation: true,
+        templateUrl: 'app/registration/formRegister.html',
+        controller: 'ModalController',
+        resolve: {
+          user : function () {
+            return $scope.user;
+          }
+        }
+      });
+
+
+    modalInstance.result.then(function (user) {
+      $scope.user = user;
+      userService.addUser($scope.user);
+      $scope.user = null;
+      $scope.users = userService.getUsers();
+
+    }, function () {
+      $log.info('Modal dismissed at: ' + new Date());
+    });
+
+
+    };
+
+  });
+
+
+  app.controller('ModalController', function($scope, $modalInstance, user){ 
+      $scope.user = user; 
+
+       $scope.submitForm = function () {
+          $modalInstance.close($scope.user);
+      };
   });
 
 })();
