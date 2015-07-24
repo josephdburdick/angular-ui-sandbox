@@ -1,0 +1,22 @@
+<div>
+<br><br>
+  <ul class="list-group">
+    <li class="list-group-item"  ng-repeat="user in users">
+      <div class="row">
+        <div class="col-md-1 col-sm-2">
+          <a class="delete-user btn btn-warning" ng-click="delete(user.id)">Remove</a>
+        </div>
+        <div class="col-lg-1 col-sm-2">{{user.firstName}}</div>
+        <div class="col-lg-1 col-sm-2">{{user.lastName}}</div>
+        <div class="col-lg-9 col-sm-6 text-right">{{user.salary | currency}}</div>
+      </div>
+    </li>  
+
+  </ul>
+</div>
+  
+
+
+<form>
+  
+</form>
