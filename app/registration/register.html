@@ -1,14 +1,15 @@
 <div>
 <br><br>
   <ul class="list-group">
-    <li class="list-group-item"  ng-repeat="user in users">
+
+    <li class="list-group-item" ng-repeat="user in users">
       <div class="row">
-        <div class="col-md-1 col-sm-2">
+        <div class="col-lg-1 col-sm-2 pull-right">
           <a class="delete-user btn btn-warning" ng-click="delete(user.id)">Remove</a>
         </div>
         <div class="col-lg-1 col-sm-2">{{user.firstName}}</div>
         <div class="col-lg-1 col-sm-2">{{user.lastName}}</div>
-        <div class="col-lg-9 col-sm-6 text-right">{{user.salary | currency}}</div>
+        <div class="col-lg-9 col-sm-6 text-right"><span class="label" ng-class="{'label-success' : user.salary > 150, 'label-danger' : user.salary < 110, 'label-warning' : user.salary < 150 }">{{user.salary | currency}}</span></div>
       </div>
     </li>  
 
@@ -17,6 +18,39 @@
   
 
 
-<form>
+<form name="formRegister" novalidate ng-submit="formRegister.$valid && submitForm()">
+  <div class="form-group">
+    <label for="first-name">First Name</label>
+    <input name="firstName"
+           type="text" 
+           class="form-control" 
+           id="first-name" 
+           placeholder="First Name"
+           ng-model="user.firstName" ng-required="true">
+    <span class="help-block" ng-show="formRegister.$submitted && formRegister.firstName.$error.required">Required</span>
+    
+    <!-- <pre> pre: {{ formRegister.firstName | json}}</pre> -->
+  </div>
+  <div class="form-group">
+    <label for="last-name">Last Name</label>
+    <input name="lastName"
+           type="text" 
+           class="form-control" 
+           id="last-name" 
+           placeholder="Last Name"
+           ng-model="user.lastName" ng-required="true">
+    <span class="help-block" ng-show="formRegister.$submitted && formRegister.lastName.$error.required">Required</span>
+  </div>
+  <div class="form-group">
+    <label for="salary">Salary</label>
+    <input name="salary"
+           type="number" 
+           class="form-control" 
+           id="salary" 
+           placeholder="Salary"
+           ng-model="user.salary" ng-required="true">
+    <span class="help-block" ng-show="formRegister.$submitted && formRegister.salary.$error.required">Required</span>
+  </div>
   
+  <button type="submit" class="btn btn-primary">Submit</button>
 </form>

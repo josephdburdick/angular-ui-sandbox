@@ -5,7 +5,7 @@
 
   app.factory('userService', function(){
     var users = [
-        { id: 1, firstName: 'Joe', lastName: 'Keeper', salary: 123.12},
+        { id: 1, firstName: 'Joe', lastName: 'Keeper', salary: 99.12},
         { id: 2, firstName: 'Eugene', lastName: 'Thompsonson', salary: 133.23},
         { id: 3, firstName: 'Bob', lastName: 'Campbell', salary: 143.34},
         { id: 4, firstName: 'Jack', lastName: 'Rombless', salary: 153.4234235},
@@ -16,6 +16,9 @@
     ];
     var addUser = function(user){
       if (user){
+        var lastId = users[users.length - 1].id + 1;
+
+        user.id = lastId;
         users.push(user);
       }
     };
