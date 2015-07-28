@@ -19,6 +19,7 @@
     "bootstrap": "~3.3.5"
   },
   "dependencies": {
-    "angular-animate": "~1.4.3"
+    "angular-animate": "~1.4.3",
+    "underscore": "~1.8.3"
   }
 }

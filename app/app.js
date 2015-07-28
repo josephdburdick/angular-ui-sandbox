@@ -1,10 +1,14 @@
 (function(){
   'use strict';
 
-  var app = angular.module('app', ['ngRoute', 'ui.bootstrap', 'ngAnimate', 'appRegister', 'appSlideshow']);
+  var app = angular.module('app', ['ngRoute', 'ui.bootstrap', 'ngAnimate', 'appRegister', 'appSlideshow', 'appGraph']);
 
   app.config(function($routeProvider){
     $routeProvider
+      .when('/graph', {
+        templateUrl: 'app/graph/graph.html',
+        controller: 'GraphController'
+      })
       .when('/slideshow', {
         templateUrl: 'app/slideshow/slideshow.html',
         controller: 'SlideshowController'
@@ -14,7 +18,7 @@
         controller: 'RegisterController'
       })
       .otherwise({
-        redirectTo: '/slideshow'
+        redirectTo: '/graph'
       });
   });
 

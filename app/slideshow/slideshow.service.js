@@ -27,7 +27,6 @@
     };
 
     return {
-      addSlide: addSlide,
       getSlides: getSlides,
       deleteSlide: deleteSlide
     }
