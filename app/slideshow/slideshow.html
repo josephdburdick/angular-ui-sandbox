@@ -1,0 +1,12 @@
+<div name="appSlideshow" ng-controller="SlideshowController">
+
+  <carousel interval="myInterval" no-wrap="noWrapSlides">
+    <slide ng-repeat="slide in slides" active="slide.active">
+      <div class="row">
+        <div class="col-sm-6"><img ng-src="{{slide.imageUrl}}" style="margin: auto;"></div>
+        <div class="col-sm-6">{{slide.caption}}</div>
+      </div>
+    </slide>
+  </carousel>
+
+</div>
