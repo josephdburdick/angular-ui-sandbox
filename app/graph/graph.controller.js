@@ -7,9 +7,11 @@
     google.load('visualization', '1.0', {'packages':['geochart']});
     var states = [],
         people = [],
-        stateKills = [],
-        killDates = [],
-        killsByDay = [];
+        stateDeaths = [],
+        deathDates = [],
+        deathsByDay = [],
+        deathCountsByState = [],
+        byState = [];
 
 
     graphDataService.getGraphData().then(function(data){
@@ -40,46 +42,41 @@
         var name = _.pluck(data, 'Name');
         return name;
       },
-      getKillsByState = function(data){
+      getDeathsByState = function(data){
         return _.groupBy(data, 'State');
       },
-      getKillsByDate = function(data){
+      getDeathsByDate = function(data){
         var dates = _.groupBy(data, 'Date');
         var sortedDates = _.sortBy(dates, function(o){
           return o.Date;
         });
-        debugger;
       },
-      // groupKillsByDay = function(data){
-      //   var dates = _.groupBy(getKillsByDate(data), function(person, i){
-      //     return person;
-      //   })
-      // },
+      getDeathCountsByState = function(stateDeaths){
+        
+        _.each(stateDeaths, function(o, state){
+          deathCountsByState.push([state, o.length])
+        });
+        return deathCountsByState;
+      
+      },
       handleData = function(data){
         convertDates(data);
-        states = getStates(data),
-        people = getPeopleNames(data),
-        stateKills = getKillsByState(data),
-        killDates = getKillsByDate(data),
-        killsByDay = groupKillsByDay(data);
-
-        debugger;
+        states = getStates(data);
+        people = getPeopleNames(data);
+        stateDeaths = getDeathsByState(data);
+        deathDates = getDeathsByDate(data);
+        byState = getDeathCountsByState(stateDeaths);
       };
+
     // Set a callback to run when the Google Visualization API is loaded.
     google.setOnLoadCallback(drawRegionsMap);
 
     function drawRegionsMap() {
-     
-      var data = google.visualization.arrayToDataTable([
-        ['State', 'Deaths'],
-        ['VA', 200],
-        ['NY', 300],
-        ['DE', 400],
-        ['AL', 500],
-        ['PA', 600],
-        ['SC', 700]
-      ]);
+      var arr = [['State', 'Deaths']];
+      arr = _.union(arr, byState);
 
+      var data = google.visualization.arrayToDataTable(arr);
+      // _.each(stateDeaths)
       var options = {
         region: "US",
         resolution: "provinces"
