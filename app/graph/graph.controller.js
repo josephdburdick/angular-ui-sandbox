@@ -1,10 +1,10 @@
 (function(){
   'use strict';
-
+  var xIndex = 0;
   var app = angular.module('appGraph');
-
+  
   app.controller('GraphController', function($scope, graphDataService){
-    google.load('visualization', '1.0', {'packages':['geochart']});
+    
     var states = [],
         people = [],
         stateDeaths = [],
@@ -13,9 +13,9 @@
         deathCountsByState = [],
         byState = [];
 
-
     graphDataService.getGraphData().then(function(data){
       handleData(data);
+      drawChart();
     }, function(err){
       console.log(err);
     });
@@ -68,24 +68,22 @@
         byState = getDeathCountsByState(stateDeaths);
       };
 
-    // Set a callback to run when the Google Visualization API is loaded.
-    google.setOnLoadCallback(drawRegionsMap);
+      function drawChart(){
 
-    function drawRegionsMap() {
-      var arr = [['State', 'Deaths']];
-      arr = _.union(arr, byState);
+        var chart = {};
+        chart.type = "GeoChart";
+        
+        var arr = [['State', 'Deaths']];
+          arr = _.union(arr, byState);
+        chart.data = arr;
 
-      var data = google.visualization.arrayToDataTable(arr);
-      // _.each(stateDeaths)
-      var options = {
-        region: "US",
-        resolution: "provinces"
-      };
+        chart.options = {
+            region: "US",
+            resolution: "provinces"
+        };
 
-      var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
-
-      chart.draw(data, options);
-    }
+        $scope.chart = chart;        
+      }
 
   });
 

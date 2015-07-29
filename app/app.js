@@ -1,24 +1,27 @@
 (function(){
   'use strict';
 
-  var app = angular.module('app', ['ngRoute', 'ui.bootstrap', 'ngAnimate', 'appRegister', 'appSlideshow', 'appGraph']);
+  var app = angular.module('app', ['ngRoute', 'ui.bootstrap', 'appRegister', 'appSlideshow', 'googlechart', 'appGraph']);
 
   app.config(function($routeProvider){
     $routeProvider
       .when('/graph', {
         templateUrl: 'app/graph/graph.html',
-        controller: 'GraphController'
+        controller: 'GraphController',
+        name: 'graph'
       })
       .when('/slideshow', {
         templateUrl: 'app/slideshow/slideshow.html',
-        controller: 'SlideshowController'
+        controller: 'SlideshowController',
+        name: 'slideshow'
       })
       .when('/register', {
         templateUrl: 'app/registration/usersList.html',
-        controller: 'RegisterController'
+        controller: 'RegisterController',
+        name: 'register'
       })
       .otherwise({
-        redirectTo: '/graph'
+        redirectTo: '/slideshow'
       });
   });
 
